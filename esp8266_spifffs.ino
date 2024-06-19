@@ -58,12 +58,33 @@ void writeFile(){
  
   file.close();
 }
+
+void appendFile(String nameFile){
+  File file = SPIFFS.open(nameFile, "a");
+ 
+  if (!file) {
+    Serial.println("Error opening file for append");
+    return;
+  }
+ 
+  int bytesWritten = file.print("Append File -");
+ 
+  if (bytesWritten > 0) {
+    Serial.println("File was append");
+ 
+  } else {
+    Serial.println("File append failed");
+  }
+ 
+  file.close();
+}
  
 void loop() {
   Serial.begin(9600);
   // Serial.println("Hello World:");
   readFile();
   writeFile();
+  // appendFile("/welcome.txt");
   digitalWrite(LED_BUILTIN, HIGH);   // turn the LED on (HIGH is the voltage level)
   delay(1000);                       // wait for a second
   digitalWrite(LED_BUILTIN, LOW);    // turn the LED off by making the voltage LOW
